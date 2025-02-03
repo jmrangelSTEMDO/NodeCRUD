@@ -1,17 +1,16 @@
-const {createClient} = require('@supabase/supabase-js')
-const express = require ('express')
-const port = process.env.PORT || 9000
-
-const supabaseUrl ='https://cmzgqyfvwnsxrbinxkjk.supabase.co'
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNtemdxeWZ2d25zeHJiaW54a2prIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczODU3MjU5MCwiZXhwIjoyMDU0MTQ4NTkwfQ.DSRew9cWsqX22HZIR6JkxDr5F7lAdxQbT4R5XqYYaUA'
-const supabase = createClient(supabaseUrl, supabaseKey)
+const express = require('express');
+const userRoutes = require('./routes/routes.js'); // Importa el módulo de rutas
 
 const app = express();
 
-//routes
+// Middleware para parsear JSON
+app.use(express.json());
 
-app.get('/', (req, res)=> {
-    res.send("Welcome to Felix's API");
-})
+// Usa las rutas de usuarios
+app.use('/api', userRoutes);
 
-app.listen(port,() => console.log( 'server listening on port', port))
+// Inicia el servidor
+const PORT = process.env.PORT || 9000;
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
+});
