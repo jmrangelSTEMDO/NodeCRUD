@@ -1,5 +1,11 @@
-const express = require ('express');
+const {CreateClient} = require('@supabase/supabase-js')
+const express = require ('express')
+const port = process.env.PORT || 9000
+
+const supabaseUrl =''
+const supabaseKey = ''
+const supabase = CreateClient(supabaseUrl, supabaseKey)
 
 const app = express();
 
-app.listen(9000, () => console.log('server listening on port', 9000));
+app.listen(port,() => console.log( 'server listening on port', port))
