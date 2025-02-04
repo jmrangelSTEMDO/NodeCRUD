@@ -1,30 +1,8 @@
-/*import { createClient } from "@supabase/supabase-js";
-
-export const supabase = createClient(
-    'https://cmzgqyfvwnsxrbinxkjk.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNtemdxeWZ2d25zeHJiaW54a2prIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczODU3MjU5MCwiZXhwIjoyMDU0MTQ4NTkwfQ.DSRew9cWsqX22HZIR6JkxDr5F7lAdxQbT4R5XqYYaUA'
-);
-
-export async function createData(req, res) {
-    try {
-        const { data, error } = await supabase
-            .from('usuarios')
-            .insert([req.body]);
-
-        if (error) throw error;
-        return res.status(201).json(data);
-    } catch (error) {
-        console.error('Error al insertar usuario:', error.message);
-        return res.status(400).json({ error: error.message });
-    }
-}
-
-*/
-
 import dotenv from 'dotenv'
 dotenv.config();
 import { createClient } from "@supabase/supabase-js";
 import CryptoJS from 'crypto-js';
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 export const supabase = createClient(
   'https://cmzgqyfvwnsxrbinxkjk.supabase.co',
@@ -32,7 +10,7 @@ export const supabase = createClient(
 );
 
 // Clave secreta para la encriptación (guárdala de forma segura, no la expongas en el código)
-const SECRET_KEY =process.env.ENCRYPTION_SECRET_KEY;
+const SECRET_KEY = process.env.ENCRYPTION_SECRET_KEY;
 
 
 function encryptData(data) {
@@ -40,20 +18,28 @@ function encryptData(data) {
 }
 
 export async function createData(req, res) {
-  try {
-    // Encripta los datos del body
+  // console.log(req.body.email)
+  // console.log(validarEmail(req.body.email))
 
-    
-    const encryptedData = encryptData(req.body.email);
-    const { data, error } = await supabase
+  if (validarEmail(req.body.email)){
+
+    try {
+      
+      const encryptedData = encryptData(req.body.email);
+      // if(encryptData != "")
+      const { data, error } = await supabase
       .from('usuarios')
-      .insert([{ email: encryptedData }]);
-    
-    if (error) throw error;
-    return res.status(201).json({ message: 'Datos encriptados insertados correctamente' });
-  } catch (error) {
-    console.error('Error al insertar usuario:', error.message);
-    return res.status(400).json({ error: error.message });
+      .insert([{ email: encryptedData }])
+      .select();
+      
+      if (error) throw error;
+      return res.status(201).json({ message: 'Datos encriptados insertados correctamente' });
+    } catch (error) {
+      console.error('Error al insertar usuario:', error.message);
+      return res.status(400).json({ error: error.message });
+    }
+  }else{
+    return res.status(400).json({ error: 'El correo electrónico introducido no es válido.' });;
   }
 }
 
@@ -102,9 +88,7 @@ export async function readTodosDecrypted(req, res) {
 
 export async function updateData(req, res, id) {
   try {
-    // Encripta los datos del body
-
-    
+  
     const encryptedData = encryptData(req.body.email);
     const { data, error } = await supabase
       .from('usuarios')
@@ -117,4 +101,8 @@ export async function updateData(req, res, id) {
     console.error('Error al actualizar el usuario:', error.message);
     return res.status(400).json({ error: error.message });
   }
+}
+
+function validarEmail(email) {
+  return emailRegex.test(email);
 }
