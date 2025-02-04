@@ -100,3 +100,21 @@ export async function readTodosDecrypted(req, res) {
 }
 
 
+export async function updateData(req, res, id) {
+  try {
+    // Encripta los datos del body
+
+    
+    const encryptedData = encryptData(req.body.email);
+    const { data, error } = await supabase
+      .from('usuarios')
+      .update([{ email: encryptedData }])
+      .eq('id', id);
+    
+    if (error) throw error;
+    return res.status(201).json({ message: 'Datos encriptados actualizados correctamente' });
+  } catch (error) {
+    console.error('Error al actualizar el usuario:', error.message);
+    return res.status(400).json({ error: error.message });
+  }
+}

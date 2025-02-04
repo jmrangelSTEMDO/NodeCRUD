@@ -31,6 +31,13 @@ router.get('/pepito', async (req, res) =>{
   }
 });
 
+router.put('/:id', async (req,res) => {
+  try{
+    await userController.updateData(id)
+  }catch(error){
+    console.error("Error al leer la tabla:", error.message);
+  }
+});
 
 
 module.exports = router;
