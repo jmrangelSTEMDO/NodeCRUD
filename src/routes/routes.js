@@ -31,6 +31,15 @@ router.get('/pepito', async (req, res) =>{
   }
 });
 
+router.get('/list', async (req, res) =>{
+  try{
+    await userController.csv(req, res);
+  }catch(error){
+    console.error("Error al leer la tabla:", error.message);
+  }
+});
+
+
 router.put('/:id', async (req,res) => {
   try{
     await userController.updateData(id)
