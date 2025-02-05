@@ -1,7 +1,8 @@
 const express = require('express');
 const userRoutes = require('./routes/routes.js'); // Importa el módulo de rutas
-const app = express();
 var cors = require('cors');
+const app = express();
+app.use(express.static('public'));
 
 var allowedOrigins = [
   'http://localhost:3000',
