@@ -3,7 +3,6 @@ const userRoutes = require('./src/routes/routes'); // Importa el módulo de ruta
 var cors = require('cors');
 const app = express();
 app.use(express.static('public'));
-var serviceAccount = require("./config.json");
 
 var allowedOrigins = [
   'http://localhost:3000',
