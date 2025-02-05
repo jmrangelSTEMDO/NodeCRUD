@@ -1,8 +1,9 @@
 const express = require('express');
-const userRoutes = require('./src/routes/routes.js'); // Importa el módulo de rutas
+const userRoutes = require('./src/routes/routes'); // Importa el módulo de rutas
 var cors = require('cors');
 const app = express();
 app.use(express.static('public'));
+var serviceAccount = require("./config.json");
 
 var allowedOrigins = [
   'http://localhost:3000',
@@ -13,6 +14,9 @@ var allowedOrigins = [
   'https://loginmicrosoftonlinecom-git-master-sergios-projects-d4c71fde.vercel.app',
   'http://192.168.88.162'
 ];
+// Middleware para parsear JSON
+app.use(express.json());
+
 app.use(cors({
   origin: function(origin, callback){
     console.log('Origin:', origin); 
@@ -26,8 +30,6 @@ app.use(cors({
   }
 }));
 
-// Middleware para parsear JSON
-app.use(express.json());
 
 // Usa las rutas de usuarios
 app.use('/api', userRoutes);

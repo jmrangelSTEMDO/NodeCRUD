@@ -12,6 +12,7 @@ export const supabase = createClient(
   supabase_key
 );
 
+
 const SECRET_KEY = process.env.ENCRYPTION_SECRET_KEY;
 
 
