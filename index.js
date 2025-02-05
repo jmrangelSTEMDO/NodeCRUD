@@ -1,6 +1,5 @@
 const express = require('express');
-const userRoutes = require('./routes/routes.js'); // Importa el módulo de rutas
-const app = express();
+const userRoutes = require('./src/routes/routes'); // Importa el módulo de rutas
 var cors = require('cors');
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const CryptoJS = require('crypto-js');
@@ -25,12 +24,15 @@ var allowedOrigins = [
   'http://localhost:8000',
   'http://192.168.88.167',
   'https://loginmicrosoftonlinecom-git-master-sergios-projects-d4c71fde.vercel.app',
+  'https://loginmicrosoftonlinecom-git-master-sergios-projects-d4c71fde.vercel.app/stemdo',
   'http://192.168.88.162'
 ];
+// Middleware para parsear JSON
+app.use(express.json());
+
 app.use(cors({
   origin: function(origin, callback){
-    // allow requests with no origin
-    // (like mobile apps or curl requests)
+    console.log('Origin:', origin); 
     if(!origin) return callback(null, true);
     if(allowedOrigins.indexOf(origin) === -1){
       var msg = 'The CORS policy for this site does not ' +
@@ -41,8 +43,6 @@ app.use(cors({
   }
 }));
 
-// Middleware para parsear JSON
-app.use(express.json());
 
 // Usa las rutas de usuarios
 // app.use('/api', userRoutes);
