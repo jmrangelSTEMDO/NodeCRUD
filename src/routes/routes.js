@@ -18,7 +18,7 @@ router.get('/list', async (req, res) =>{
   }
 });
 
-router.get('/', async (req, res) =>{
+router.get('/', async (req, res) =>{ console.log("hloa");
   try{
     await userController.readTodos(req, res);
   }catch(error){
