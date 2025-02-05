@@ -2,13 +2,6 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../usuarios/usuarios')
 
-router.post('/usuarios', async (req, res) => {
-  try {
-    await userController.createData(req, res, userController.supabase);
-  } catch (error){
-    console.error('error al insertar usuario:', error.message);
-  }
-});
 
 router.get('/list', async (req, res) =>{
   try{

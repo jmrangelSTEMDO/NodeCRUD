@@ -1,23 +1,13 @@
-import dotenv from 'dotenv'
-dotenv.config();
+
 import { createClient } from "@supabase/supabase-js";
-import CryptoJS from 'crypto-js';
+
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const supabase_url = process.env.SUPABASE_URL;
-const supabase_key = process.env.SUPABASE_KEY;
 
 
-export const supabase = createClient(
-  supabase_url,
-  supabase_key
-);
-
-const SECRET_KEY = process.env.ENCRYPTION_SECRET_KEY;
 
 
-function encryptData(data) {
-  return CryptoJS.AES.encrypt(data, SECRET_KEY).toString();
-}
+
+
 
 export async function createData(req, res) {
   if (validarEmail(req.body.email)) {
@@ -127,18 +117,11 @@ export async function csv(req, res) {
 // }
 
 
-function jsonToCsv(json) {
-  const items = JSON.parse(json);
-  const header = Object.keys(items[0]).join(',');
-  const rows = items.map(item => Object.values(item).join(',')).join('\n');
-  return `${header}\n${rows}`;
-}
 
 
 
-function validarEmail(email) {
-  return emailRegex.test(email);
-}
+
+
 
 
 
