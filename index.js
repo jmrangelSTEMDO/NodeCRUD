@@ -1,4 +1,5 @@
 const express = require('express');
+const app = express();
 const userRoutes = require('./src/routes/routes'); // Importa el módulo de rutas
 var cors = require('cors');
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
