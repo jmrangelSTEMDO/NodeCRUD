@@ -18,6 +18,8 @@ const supabase = createClient(
   supabase_key
 );
 
+app.use(express.json());
+
 var allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:4200',
@@ -29,7 +31,6 @@ var allowedOrigins = [
   'http://192.168.88.162'
 ];
 // Middleware para parsear JSON
-app.use(express.json());
 
 app.use(cors({
   origin: function(origin, callback){
