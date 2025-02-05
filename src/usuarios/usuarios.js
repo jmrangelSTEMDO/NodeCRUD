@@ -14,6 +14,7 @@ const SECRET_KEY = process.env.ENCRYPTION_SECRET_KEY;
 
 
 function encryptData(data) {
+    // return CryptoJS.AES.encrypt(data, SECRET_KEY).toString();
     return CryptoJS.AES.encrypt(data, SECRET_KEY).toString();
 }
 
@@ -110,7 +111,8 @@ export async function csv(req, res) {
     .from('usuarios')
     .select('*');
     // console.log(data);
-    json = data;
+    // json = data;
+    //esto duplicaba las lineas.
     data.forEach(element => {
         let emailD = CryptoJS.AES.decrypt(element.email, SECRET_KEY).toString(CryptoJS.enc.Utf8);
     
@@ -126,14 +128,16 @@ export async function csv(req, res) {
  
   }
   json = JSON.stringify(json);
-  // console.log(json);
+  //el problema erradica en que el json ya tiene los dos duplicados
+  console.log(json);
   let csv = jsonToCsv(json);
 
   csv = CryptoJS.AES.encrypt(csv, SECRET_KEY).toString();
   res.header('Content-Type', 'text/csv');
   res.attachment('datos.csv');
   // console.log(csv);
-  console.log(CryptoJS.AES.decrypt(csv, SECRET_KEY).toString(CryptoJS.enc.Utf8));
+
+  // console.log(CryptoJS.AES.decrypt(csv, SECRET_KEY).toString(CryptoJS.enc.Utf8));
   res.send(csv);
   
 }
