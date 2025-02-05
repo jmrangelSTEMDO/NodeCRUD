@@ -12,12 +12,10 @@ export const supabase = createClient(
   supabase_key
 );
 
-// Clave secreta para la encriptación (guárdala de forma segura, no la expongas en el código)
 const SECRET_KEY = process.env.ENCRYPTION_SECRET_KEY;
 
 
 function encryptData(data) {
-  // return CryptoJS.AES.encrypt(data, SECRET_KEY).toString();
   return CryptoJS.AES.encrypt(data, SECRET_KEY).toString();
 }
 
