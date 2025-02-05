@@ -1,5 +1,5 @@
 const express = require('express');
-const userRoutes = require('./routes/routes.js'); // Importa el módulo de rutas
+const userRoutes = require('./src/routes/routes.js'); // Importa el módulo de rutas
 var cors = require('cors');
 const app = express();
 app.use(express.static('public'));
