@@ -18,13 +18,13 @@ router.get('/list', async (req, res) =>{
   }
 });
 
-// router.get('/', async (req, res) =>{
-//   try{
-//     await userController.readTodos(req, res);
-//   }catch(error){
-//     console.error("Error al leer la tabla:", error.message);
-//   }
-// });
+router.get('/', async (req, res) =>{
+  try{
+    await userController.readTodos(req, res);
+  }catch(error){
+    console.error("Error al leer la tabla:", error.message);
+  }
+});
 
 // router.get('/pepito', async (req, res) =>{
 //   try{
